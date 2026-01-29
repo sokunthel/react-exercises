@@ -3,7 +3,7 @@ export default function ButtonPanel({ onClickButton }) {
     "7",
     "8",
     "9",
-    "%",
+    "/",
     "4",
     "5",
     "6",
