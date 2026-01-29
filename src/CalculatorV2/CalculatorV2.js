@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import Wrapper from "./components/Wrapper";
 import Screen from "./components/Screen";
-import ButtonBox from "./components/ButtonBox";
 import Button from "./components/Button";
+import "./CalculatorV2.css";
 
 const btnValues = [
   ["C", "+-", "%", "/"],
@@ -123,40 +122,45 @@ export default function CalculatorV2() {
     });
   };
 
+  const getClickHandler = (btn) => {
+    switch (btn) {
+      case "C":
+        return resetClickHandler;
+      case "+-":
+        return invertClickHandler;
+      case "%":
+        return percentClickHandler;
+      case "=":
+        return equalsClickHandler;
+      case "/":
+      case "X":
+      case "-":
+      case "+":
+        return signClickHandler;
+      case ".":
+        return commaClickHandler;
+      default:
+        return numClickHandler;
+    }
+  };
+
   return (
     <div className="calculatorV2">
-      <Wrapper>
+      <div className="wrapper">
         <Screen value={calc.num ? calc.num : calc.res} />
-        <ButtonBox>
+        <div className="buttonBox">
           {btnValues.flat().map((btn, i) => {
             return (
               <Button
                 key={i}
                 className={btn === "=" ? "equals" : ""}
                 value={btn}
-                onClick={
-                  btn === "C"
-                    ? resetClickHandler
-                    : btn === "+-"
-                      ? invertClickHandler
-                      : btn === "%"
-                        ? percentClickHandler
-                        : btn === "="
-                          ? equalsClickHandler
-                          : btn === "/" ||
-                              btn === "X" ||
-                              btn === "-" ||
-                              btn === "+"
-                            ? signClickHandler
-                            : btn === "."
-                              ? commaClickHandler
-                              : numClickHandler
-                }
+                onClick={getClickHandler(btn)}
               />
             );
           })}
-        </ButtonBox>
-      </Wrapper>
+        </div>
+      </div>
     </div>
   );
 }
